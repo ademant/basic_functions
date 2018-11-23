@@ -93,7 +93,7 @@ basic_functions.parse_tree=function(mat,ind,val)
 		if mat[first] == nil then
 			mat[first]={}
 		end
-		mat[first]=minerdream.parse_tree(mat[first],second,val)
+		mat[first]=basic_functions.parse_tree(mat[first],second,val)
 	end
 	return(mat)
 end
