@@ -102,3 +102,23 @@ basic_functions.parse_tree=function(mat,ind,val)
 	end
 	return(mat)
 end
+
+-- function to read settingtypes.txt and insert values into minetest.setting
+basic_functions.import_settingtype = function(infile)
+	local file = io.open(infile, "r")
+	local outdata = {}
+	-- reading header with column names
+	local splitchar=" "
+	local setname=minetest.settings:get_names()
+	for line in file:lines() do
+		local attrib = line:gsub("\"",""):gsub("%(.*%) ",""):gsub("\r",""):split(splitchar,true)
+		if has_value(setname,attrib[1]) == false then
+			print("pong")
+			if attrib[2] == "bool" then
+				minetest.settings:set_bool(attrib[1],attrib[3] == "true")
+			else
+				minetest.settings:set(attrib[1],attrib[3])
+			end
+		end
+	end
+end
