@@ -79,8 +79,13 @@ end
 -- inside "mat" 
 basic_functions.parse_tree=function(mat,ind,val)
 	if string.find(ind,"_") == nil then
-		mat[ind] = {}
-		mat[ind] = tonumber(val)
+		if tonumber(ind) ~= nil then
+			mat[tonumber(ind)] = {}
+			mat[tonumber(ind)] = tonumber(val)
+		else
+			mat[ind] = {}
+			mat[ind] = tonumber(val)
+		end
 	else
 		local ind_split=string.split(ind,"_")
 		local first=ind_split[1]
