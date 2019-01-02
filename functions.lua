@@ -112,12 +112,15 @@ basic_functions.import_settingtype = function(infile)
 	local setname=minetest.settings:get_names()
 	for line in file:lines() do
 		local attrib = line:gsub("\"",""):gsub("%(.*%) ",""):gsub("\r",""):split(splitchar,true)
-		if has_value(setname,attrib[1]) == false then
-			print("pong")
-			if attrib[2] == "bool" then
-				minetest.settings:set_bool(attrib[1],attrib[3] == "true")
-			else
-				minetest.settings:set(attrib[1],attrib[3])
+		if(#attrib > 1) then
+			if (attrib[1]:find("#") == nil ) then
+				if has_value(setname,attrib[1]) == false then
+					if attrib[2] == "bool" then
+						minetest.settings:set_bool(attrib[1],attrib[3] == "true")
+					else
+						minetest.settings:set(attrib[1],attrib[3])
+					end
+				end
 			end
 		end
 	end
