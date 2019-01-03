@@ -32,42 +32,43 @@ basic_functions.import_csv = function(infile,def)
 	-- read each line, split in separat fields and stores in array
 	-- by header the value is stored as numeric, in the group environment or as text
 	for line in file:lines() do
-		local attribs = line:gsub("\r",""):split(splitchar,true)
-		local nrow={groups={}}
-		for i,d in ipairs(attribs) do
-			
-			if d ~= "" then
-				local th=header[i]
-				local dsaved = false
-				if def.col_num then
-					if has_value(def.col_num,th) then
-						nrow[th] = tonumber(d)
-						dsaved = true
-					end
-				end
-				if def.groups_num then
-					if has_value(def.groups_num,th) then
-						nrow.groups[th]=tonumber(d)
-						dsaved = true
-					end
-				end
-				if th == "name" then
-					nrow[th] = d
-				else
-					if not dsaved then
-						if as_numeric then
+		if line:sub(1,1) ~= "#" then -- lines starting with # are handled as comment
+			local attribs = line:gsub("\r",""):split(splitchar,true)
+			local nrow={groups={}}
+			for i,d in ipairs(attribs) do
+				if d ~= "" then
+					local th=header[i]
+					local dsaved = false
+					if def.col_num then
+						if has_value(def.col_num,th) then
 							nrow[th] = tonumber(d)
-						else
-							nrow[th]=d
+							dsaved = true
+						end
+					end
+					if def.groups_num then
+						if has_value(def.groups_num,th) then
+							nrow.groups[th]=tonumber(d)
+							dsaved = true
+						end
+					end
+					if th == "name" then
+						nrow[th] = d
+					else
+						if not dsaved then
+							if as_numeric then
+								nrow[th] = tonumber(d)
+							else
+								nrow[th]=d
+							end
 						end
 					end
 				end
 			end
-		end
-		if nrow.name then
-			outdata[nrow.name] = nrow
-		else
-			outdata[#outdata+1] = nrow
+			if nrow.name then
+				outdata[nrow.name] = nrow
+			else
+				outdata[#outdata+1] = nrow
+			end
 		end
 	end
 	file:close()
@@ -111,9 +112,9 @@ basic_functions.import_settingtype = function(infile)
 	local splitchar=" "
 	local setname=minetest.settings:get_names()
 	for line in file:lines() do
-		local attrib = line:gsub("\"",""):gsub("%(.*%) ",""):gsub("\r",""):split(splitchar,true)
-		if(#attrib > 1) then
-			if (attrib[1]:find("#") == nil ) then
+		if line:sub(1,1) ~= "#" then -- lines starting with # are handled as comment
+			local attrib = line:gsub("\"",""):gsub("%(.*%) ",""):gsub("\r",""):split(splitchar,true)
+			if(#attrib >= 3) then -- there should be at least 3 fields in a row (without the description)
 				if has_value(setname,attrib[1]) == false then
 					if attrib[2] == "bool" then
 						minetest.settings:set_bool(attrib[1],attrib[3] == "true")
