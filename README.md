@@ -13,3 +13,6 @@ function import_csv(infile,def)
 function parse_tree(mat,ind,val)
 	split name of "ind" and store as nested matrix inside mat.
 	Example: armor_fleshy_1 will be stored in armor={fleshy={[1]=val}}
+
+basic_functions.import_settingtype(infile)
+	infile - file to read configuration in style of settingtype.txt into minetest.settings, so it can be parsed by minetest.settings: methods
