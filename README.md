@@ -1,5 +1,9 @@
-Basic functions
-short api:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+#Basic functions
+##Short description
+Mod provide some functions, I need for several mods. Basically for import spreadsheet configurations.
+
+##short api:
 function has_value(tab,val)
 	check if val is inside list tab
 
