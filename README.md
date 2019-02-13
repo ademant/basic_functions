@@ -1,5 +1,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 #Basic functions
+
+Main repository:
+
+https://notabug.org/ademant/basic_functions.git
+
+Mirrors:
+
+https://gitlab.com/ademant/basic_functions.git
+
+https://github.com/ademant/basic_functions.git
+
 ##Short description
 Mod provide some functions, I need for several mods. Basically for import spreadsheet configurations.
 
